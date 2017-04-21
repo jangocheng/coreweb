@@ -1,0 +1,10 @@
+﻿@model CoreWeb.Models.StandardPage
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.Ingress = Model.Heading.Ingress.Value;
+    ViewBag.IsStart = true;
+}
+
+<div class="container body arrow">
+    @Html.Raw(Model.Body)
+</div>

@@ -10,6 +10,12 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+# Bower components
+CoreWeb/assets/lib/
+
+# Uploaded assets
+CoreWeb/wwwroot/uploads/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
