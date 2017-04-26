@@ -21,7 +21,6 @@ namespace CoreWeb.Models.Regions
         /// <summary>
         /// Gets/sets the optional subtitle.
         /// </summary>
-        [Field]
         public StringField Subtitle { get; set; }
 
         /// <summary>

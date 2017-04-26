@@ -35,10 +35,22 @@ namespace CoreWeb.Controllers
         /// Gets the page with the specified id.
         /// </summary>
         /// <param name="id">The unique id</param>
-        /// <param name="startpage">If this is the site startpage</param>
         [Route("page")]
-        public IActionResult Page(string id, bool startpage) {
+        public IActionResult Page(string id) {
             var model = api.Pages.GetById<Models.StandardPage>(id);
+            ViewBag.CurrentPage = model.Id;
+
+            return View(model);
+        }
+
+        /// <summary>
+        /// Gets the page with the specified id.
+        /// </summary>
+        /// <param name="id">The unique id</param>
+        /// <param name="startpage">If this is the site startpage</param>
+        [Route("teaserpage")]
+        public IActionResult TeaserPage(string id, bool startpage) {
+            var model = api.Pages.GetById<Models.TeaserPage>(id);
             ViewBag.CurrentPage = model.Id;
 
             if (startpage)

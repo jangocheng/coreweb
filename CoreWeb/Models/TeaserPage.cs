@@ -18,8 +18,8 @@ namespace CoreWeb.Models
     /// <summary>
     /// Basic page with main content in markdown.
     /// </summary>
-    [PageType(Title = "Standard page")]
-    public class StandardPage : BasePage<StandardPage> // Page<StandardPage>
+    [PageType(Title = "Teaser Page", Route = "/teaserpage")]
+    public class TeaserPage : BasePage<TeaserPage> // Page<StandardPage>
     {
         /*
         /// <summary>
@@ -34,5 +34,18 @@ namespace CoreWeb.Models
         [Region]
         public Regions.PageHeading Heading { get; set; }
         */
+
+        /// <summary>
+        /// Gets/sets the available teasers.
+        /// </summary>
+        [Region(ListTitle = "Title", ListPlaceholder = "New Teaser")]
+        public IList<Regions.Teaser> Teasers { get; set; }
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        public TeaserPage() {
+            Teasers = new List<Regions.Teaser>();
+        }
     }
 }
