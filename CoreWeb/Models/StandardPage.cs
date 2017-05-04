@@ -19,5 +19,7 @@ namespace CoreWeb.Models
     /// Basic page with main content in markdown.
     /// </summary>
     [PageType(Title = "Standard page")]
-    public class StandardPage : BasePage<StandardPage> { }
+    public class StandardPage : BasePage<StandardPage>
+    {
+    }
 }

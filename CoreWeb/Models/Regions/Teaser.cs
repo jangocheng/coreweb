@@ -32,23 +32,15 @@ namespace CoreWeb.Models.Regions
         public StringField SubTitle { get; set; }
 
         /// <summary>
+        /// Gets/sets the optional teaser image.
+        /// </summary>
+        [Field]
+        public ImageField Image { get; set; }
+
+        /// <summary>
         /// Gets/sets the body.
         /// </summary>
         [Field]
         public MarkdownField Body { get; set; }
-
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public Teaser() {
-            //
-            // Note that fields in a region used as a collection item needs
-            // to be initialized if they are to be seeded through code due to
-            // a bug in the page repository.
-            //
-            Title = new StringField();
-            SubTitle = new StringField();
-            Body = new MarkdownField();
-        }
     }
 }
