@@ -48,7 +48,7 @@ namespace CoreWeb
                 config.ModelBinderProviders.Insert(0, new Piranha.Manager.Binders.AbstractModelBinderProvider());
             });
             services.AddPiranhaDb(o => {
-                o.Connection = new SqliteConnection("Filename=./piranha.coreweb.db");
+                o.Connection = new SqliteConnection("Filename=./piranha.alpha7.db");
                 o.Migrate = true;
             });
             services.AddSingleton<IStorage, FileStorage>();
