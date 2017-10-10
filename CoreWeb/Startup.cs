@@ -28,49 +28,54 @@ namespace CoreWeb
         /// <summary>
         /// The application config.
         /// </summary>
-        public IConfigurationRoot Configuration { get; set; }
+        public IConfiguration Configuration { get; set; }
 
         /// <summary>
         /// Default constructor.
         /// </summary>
         /// <param name="env">The current hosting environment</param>
-        public Startup(IHostingEnvironment env) {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            Configuration = builder.Build();
+        public Startup(IConfiguration configuration) {
+            Configuration = configuration;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services) {
+        public IServiceProvider ConfigureServices(IServiceCollection services) {
             services.AddMvc(config => {
                 config.ModelBinderProviders.Insert(0, new Piranha.Manager.Binders.AbstractModelBinderProvider());
             });
             services.AddPiranhaDb(o => {
-                o.Connection = new SqliteConnection("Filename=./piranha.alpha7.db");
+                o.Connection = new SqliteConnection("Filename=./piranha.beta1.db");
                 o.Migrate = true;
             });
             services.AddSingleton<IStorage, FileStorage>();
-            services.AddScoped<Api, Api>();
+            services.AddScoped<IApi, Api>();
+            services.AddPiranhaSimpleSecurity(
+                new Piranha.AspNetCore.SimpleUser(Piranha.Manager.Permission.All()) {
+                    UserName = "admin",
+                    Password = "password"
+                }
+            );
             services.AddPiranhaManager();
+
+            return services.BuildServiceProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, Api api) {
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider services) {
             loggerFactory.AddConsole();
 
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
             }
 
             // Initialize Piranha
+            var api = services.GetService<IApi>();
             App.Init(api);
 
             // Config
             using (var config = new Config(api)) {
-                config.CacheExpiresPages = 0;
+                config.CacheExpiresPages = 0; 
             }
 
             // Build types
@@ -82,9 +87,9 @@ namespace CoreWeb
 
             // Register middleware
             app.UseStaticFiles();
+            app.UsePiranhaSimpleSecurity();
             app.UsePiranha();
             app.UsePiranhaManager();
-
             app.UseMvc(routes => {
                 routes.MapRoute(name: "areaRoute",
                     template: "{area:exists}/{controller}/{action}/{id?}",
@@ -102,7 +107,7 @@ namespace CoreWeb
         /// Seeds some test data.
         /// </summary>
         /// <param name="api">The current application api</param>
-        private void Seed(Api api) {
+        private void Seed(IApi api) {
             if (api.Pages.GetAll().Count() == 0) {
                 // Get the default site
                 var site = api.Sites.GetDefault();
