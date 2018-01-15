@@ -1,0 +1,29 @@
+@model CoreWeb.Models.BlogPage
+@using Piranha
+@{
+    ViewBag.Title = Model.Title;
+}
+
+@section meta {
+    @Html.Partial("Partial/_Meta", Model)
+}
+
+<div class="container body">
+    <h1>@Model.Title</h1>
+
+    <div class="lead">
+        @Html.Raw(Model.Body)
+    </div>
+
+    @foreach (var post in Model.Archive.Posts) {
+        <article>
+            <header>
+                <h2><a href="~/@post.Permalink">@post.Title</a></h2>
+            </header>
+            <p class="small">Published: @post.Published.Value.ToString("yyyy-MM-dd") in @post.Category.Title</p>
+            <p>
+                @Html.Raw(Utils.FirstParagraph(post.Regions.Body))
+            </p>
+        </article>
+    }
+</div>

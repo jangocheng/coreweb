@@ -10,6 +10,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 using Piranha;
+using System;
 
 namespace CoreWeb.Controllers
 {
@@ -36,9 +37,21 @@ namespace CoreWeb.Controllers
         /// </summary>
         /// <param name="id">The unique id</param>
         [Route("page")]
-        public IActionResult Page(string id) {
+        public IActionResult Page(Guid id) {
             var model = api.Pages.GetById<Models.StandardPage>(id);
             ViewBag.CurrentPage = model.Id;
+
+            return View(model);
+        }
+
+        /// <summary>
+        /// Gets the post with the specified id.
+        /// </summary>
+        /// <param name="id">The unique id</param>
+        [Route("post")]
+        public IActionResult Post(Guid id) {
+            var model = api.Posts.GetById<Models.BlogPost>(id);
+            ViewBag.CurrentPage = model.BlogId;
 
             return View(model);
         }
@@ -49,12 +62,28 @@ namespace CoreWeb.Controllers
         /// <param name="id">The unique id</param>
         /// <param name="startpage">If this is the site startpage</param>
         [Route("teaserpage")]
-        public IActionResult TeaserPage(string id, bool startpage) {
+        public IActionResult TeaserPage(Guid id, bool startpage) {
             var model = api.Pages.GetById<Models.TeaserPage>(id);
             ViewBag.CurrentPage = model.Id;
 
             if (startpage)
                 return View("Start", model);
+            return View(model);
+        }
+
+        /// <summary>
+        /// Gets the archive for the category with the specified id.
+        /// </summary>
+        /// <param name="id">The category id</param>
+        /// <param name="year">The optional year</param>
+        /// <param name="month">The optional month</param>
+        /// <param name="page">The optional page</param>
+        /// <param name="category">The optional category id</param>
+        [Route("archive")]
+        public IActionResult Archive(Guid id, int? year = null, int? month = null, int? page = null, Guid? category = null) {
+            var model = api.Archives.GetById<Models.BlogPage>(id, page, category, year, month);
+            ViewBag.CurrentPage = model.Id;
+
             return View(model);
         }
     }
