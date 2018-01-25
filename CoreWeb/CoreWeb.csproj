@@ -12,12 +12,13 @@
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.1" />
-    <PackageReference Include="Piranha" Version="4.1.0" />
-    <PackageReference Include="Piranha.AspNetCore" Version="4.1.0" />
-    <PackageReference Include="Piranha.AspNetCore.SimpleSecurity" Version="4.1.0" />    
-    <PackageReference Include="Piranha.AttributeBuilder" Version="4.1.0" />
-    <PackageReference Include="Piranha.Local.FileStorage" Version="4.1.0" />
-    <PackageReference Include="Piranha.Manager" Version="4.1.0" />
+    <PackageReference Include="Piranha" Version="4.2.0-alpha1" />
+    <PackageReference Include="Piranha.AspNetCore" Version="4.2.0-alpha1" />
+    <PackageReference Include="Piranha.AspNetCore.SimpleSecurity" Version="4.2.0-alpha1" />    
+    <PackageReference Include="Piranha.AttributeBuilder" Version="4.2.0-alpha1" />
+    <PackageReference Include="Piranha.ImageSharp" Version="4.2.0-alpha1" />
+    <PackageReference Include="Piranha.Local.FileStorage" Version="4.2.0-alpha1" />
+    <PackageReference Include="Piranha.Manager" Version="4.2.0-alpha1" />
   </ItemGroup>
 
 </Project>
